@@ -11,9 +11,11 @@ const Login = () => {
   const [createdAt, setCreatedAt] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
+  const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
+
   const loginUser = async () => {
     try {
-      const response = await axios.post('http://localhost:8000/login', { username, password });
+      const response = await axios.post(`${apiEndpoint}/login`, { username, password });
 
       // Extract data from the response
       const { createdAt: userCreatedAt } = response.data;
