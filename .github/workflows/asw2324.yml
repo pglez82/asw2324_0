@@ -1,0 +1,87 @@
+name: CI for ASW2324
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
+    - run: npm --prefix authservice ci
+    - run: npm --prefix userservice ci
+    - run: npm --prefix gatewayservice ci
+    - run: npm --prefix webapp ci
+    - run: npm --prefix authservice test --coverage --watchAll
+    - run: npm --prefix userservice test --coverage --watchAll
+    - run: npm --prefix gatewayservice test --coverage --watchAll
+    - run: npm --prefix webapp test --coverage --watchAll
+    - name: Analyze with SonarCloud
+      uses: sonarsource/sonarcloud-github-action@master
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  
+  docker-push-webapp:
+    name: Push webapp Docker Image to GitHub Packages
+    runs-on: ubuntu-latest
+    needs: [unit-tests]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@v5
+      env:
+        API_URI: http://${{ secrets.DEPLOY_HOST }}:8000
+      with:
+          name: pglez82/asw2324_0/webapp
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ghcr.io
+          workdir: webapp
+          buildargs: API_URI
+  docker-push-authservice:
+    name: Push auth service Docker Image to GitHub Packages
+    runs-on: ubuntu-latest
+    needs: [unit-tests]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@v5
+      with:
+          name: pglez82/asw2223_0/authservice
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ghcr.io
+          workdir: authservice
+  docker-push-userservice:
+    name: Push user service Docker Image to GitHub Packages
+    runs-on: ubuntu-latest
+    needs: [unit-tests]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@v5
+      with:
+        name: pglez82/asw2223_0/userservice
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: ghcr.io
+        workdir: userservice
+  docker-push-gatewayservice:
+    name: Push user service Docker Image to GitHub Packages
+    runs-on: ubuntu-latest
+    needs: [unit-tests]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@v5
+      with:
+        name: pglez82/asw2223_0/gatewaywervice
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: ghcr.io
+        workdir: gatewayservice
