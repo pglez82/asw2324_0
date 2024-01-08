@@ -81,7 +81,7 @@ jobs:
         registry: ghcr.io
         workdir: userservice
   docker-push-gatewayservice:
-    name: Push user service Docker Image to GitHub Packages
+    name: Push gateway service Docker Image to GitHub Packages
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -97,3 +97,20 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
         workdir: gatewayservice
+  deploy:
+    name: Deploy over SSH
+    runs-on: ubuntu-latest
+    needs: [docker-push-userservice,docker-push-authservice,docker-push-gatewayservice]
+    steps:
+    - name: Deploy over SSH
+      uses: fifsky/ssh-action@master
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        user: ${{ secrets.DEPLOY_USER }}
+        key: ${{ secrets.DEPLOY_KEY }}
+        command: |
+          wget https://raw.githubusercontent.com/pglez82/asw2324_0/master/docker-compose-deploy.yml -O docker-compose.yml
+          docker-compose stop
+          docker-compose rm -f
+          docker-compose pull   
+          docker-compose up -d
