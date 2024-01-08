@@ -1,0 +1,58 @@
+version: '3'
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - mynetwork
+    volumes:
+      - mongodb_data:/data/db
+
+  authservice:
+    image: ghcr.io/pglez82/asw2324_0/authservice:latest
+    ports:
+      - "8002:8002"
+    networks:
+      - mynetwork
+    depends_on:
+      - mongodb
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/userdb
+
+  userservice:
+    image: ghcr.io/pglez82/asw2324_0/userservice:latest
+    ports:
+      - "8001:8001"
+    networks:
+      - mynetwork
+    depends_on:
+      - mongodb
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/userdb
+
+  gatewayservice:
+    image: ghcr.io/pglez82/asw2324_0/gatewayservice:latest
+    ports:
+      - "8000:8000"
+    networks:
+      - mynetwork
+    depends_on:
+      - mongodb
+    environment:
+      AUTH_SERVICE_URL: http://authservice:8002
+      USER_SERVICE_URL: http://userservice:8001
+  
+  webapp:
+    image: ghcr.io/pglez82/asw2324_0/webapp:latest
+    ports:
+      - "3000:3000"
+    depends_on:
+      - gatewayservice 
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  mongodb_data:
