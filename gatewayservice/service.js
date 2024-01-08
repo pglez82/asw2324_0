@@ -5,12 +5,11 @@ const axios = require('axios');
 const app = express();
 const port = 3000;
 
-const authServiceUrl = 'http://localhost:3002'
-const userServiceUrl = 'http://localhost:3001'
+const authServiceUrl = process.env.AUTH_SERVICE_URL || 'http://localhost:3002';
+const userServiceUrl = process.env.USER_SERVICE_URL || 'http://localhost:3001';
 
 app.use(express.json());
 
-// Define routes for the gateway service
 app.post('/login', async (req, res) => {
   try {
     // Forward the login request to the authentication service
@@ -27,7 +26,6 @@ app.post('/adduser', async (req, res) => {
     const userResponse = await axios.post(userServiceUrl+'/adduser', req.body);
     res.json(userResponse.data);
   } catch (error) {
-    console.log(error)
     res.status(error.response.status).json({ error: error.response.data.error });
   }
 });

@@ -1,0 +1,51 @@
+version: '3'
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - mynetwork
+    volumes:
+      - mongodb_data:/data/db
+
+  authservice:
+    build: ./authservice
+    ports:
+      - "3002:3002"
+    networks:
+      - mynetwork
+    depends_on:
+      - mongodb
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/userdb
+
+  userservice:
+    build: ./userservice
+    ports:
+      - "3001:3001"
+    networks:
+      - mynetwork
+    depends_on:
+      - mongodb
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/userdb
+
+  gatewayservice:
+    build: ./gatewayservice
+    ports:
+      - "3000:3000"
+    networks:
+      - mynetwork
+    depends_on:
+      - mongodb
+    environment:
+      AUTH_SERVICE_URL: http://authservice:3002
+      USER_SERVICE_URL: http://userservice:3001
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  mongodb_data:

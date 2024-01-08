@@ -10,7 +10,8 @@ const port = 3002;
 app.use(express.json());
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/userdb');
+const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/userdb';
+mongoose.connect(mongoUri);
 
 // Define the User model
 const userSchema = new mongoose.Schema({

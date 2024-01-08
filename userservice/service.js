@@ -11,7 +11,8 @@ const port = 3001;
 app.use(bodyParser.json());
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/userdb');
+const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/userdb';
+mongoose.connect(mongoUri);
 
 const userSchema = new mongoose.Schema({
     username: {
