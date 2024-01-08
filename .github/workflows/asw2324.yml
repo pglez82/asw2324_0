@@ -32,7 +32,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-    # needs: [unit-tests]
+    needs: [unit-tests]
     steps:
     - uses: actions/checkout@v3
     - name: Publish to Registry
@@ -52,13 +52,13 @@ jobs:
     permissions:
       contents: read
       packages: write
-    # needs: [unit-tests]
+    needs: [unit-tests]
     steps:
     - uses: actions/checkout@v3
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       with:
-          name: pglez82/asw2223_0/authservice
+          name: pglez82/asw2324_0/authservice
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
@@ -69,13 +69,13 @@ jobs:
     permissions:
       contents: read
       packages: write
-    # needs: [unit-tests]
+    needs: [unit-tests]
     steps:
     - uses: actions/checkout@v3
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       with:
-        name: pglez82/asw2223_0/userservice
+        name: pglez82/asw2324_0/userservice
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
@@ -86,13 +86,13 @@ jobs:
     permissions:
       contents: read
       packages: write
-    # needs: [unit-tests]
+    needs: [unit-tests]
     steps:
     - uses: actions/checkout@v3
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       with:
-        name: pglez82/asw2223_0/gatewaywervice
+        name: pglez82/asw2324_0/gatewaywervice
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
