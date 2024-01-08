@@ -14,7 +14,6 @@ const AddUser = () => {
   const addUser = async () => {
     try {
       const response = await axios.post(`${apiEndpoint}/adduser`, { username, password });
-      console.log(response.data);
       setOpenSnackbar(true);
     } catch (error) {
       setError(error.response.data.error);
