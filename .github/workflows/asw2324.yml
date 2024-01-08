@@ -29,6 +29,9 @@ jobs:
   docker-push-webapp:
     name: Push webapp Docker Image to GitHub Packages
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     needs: [unit-tests]
     steps:
     - uses: actions/checkout@v3
@@ -46,6 +49,9 @@ jobs:
   docker-push-authservice:
     name: Push auth service Docker Image to GitHub Packages
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     needs: [unit-tests]
     steps:
     - uses: actions/checkout@v3
@@ -60,6 +66,9 @@ jobs:
   docker-push-userservice:
     name: Push user service Docker Image to GitHub Packages
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     needs: [unit-tests]
     steps:
     - uses: actions/checkout@v3
@@ -74,6 +83,9 @@ jobs:
   docker-push-gatewayservice:
     name: Push user service Docker Image to GitHub Packages
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     needs: [unit-tests]
     steps:
     - uses: actions/checkout@v3
