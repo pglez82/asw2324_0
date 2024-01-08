@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const User = require('./model')
 
 const app = express();
-const port = 3002; 
+const port = 8002; 
 
 // Middleware to parse JSON in request body
 app.use(express.json());

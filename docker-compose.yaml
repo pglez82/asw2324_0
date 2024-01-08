@@ -12,7 +12,7 @@ services:
   authservice:
     build: ./authservice
     ports:
-      - "3002:3002"
+      - "8002:8002"
     networks:
       - mynetwork
     depends_on:
@@ -23,7 +23,7 @@ services:
   userservice:
     build: ./userservice
     ports:
-      - "3001:3001"
+      - "8001:8001"
     networks:
       - mynetwork
     depends_on:
@@ -34,14 +34,14 @@ services:
   gatewayservice:
     build: ./gatewayservice
     ports:
-      - "3000:3000"
+      - "8000:8000"
     networks:
       - mynetwork
     depends_on:
       - mongodb
     environment:
-      AUTH_SERVICE_URL: http://authservice:3002
-      USER_SERVICE_URL: http://userservice:3001
+      AUTH_SERVICE_URL: http://authservice:8002
+      USER_SERVICE_URL: http://userservice:8001
 
 networks:
   mynetwork:

@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const User = require('./model')
 
 const app = express();
-const port = 3001;
+const port = 8001;
 
 // Middleware to parse JSON in request body
 app.use(bodyParser.json());

@@ -1,13 +1,14 @@
-// gatewayservice/gateway-service.js
 const express = require('express');
 const axios = require('axios');
+const cors = require('cors');
 
 const app = express();
-const port = 3000;
+const port = 8000;
 
-const authServiceUrl = process.env.AUTH_SERVICE_URL || 'http://localhost:3002';
-const userServiceUrl = process.env.USER_SERVICE_URL || 'http://localhost:3001';
+const authServiceUrl = process.env.AUTH_SERVICE_URL || 'http://localhost:8002';
+const userServiceUrl = process.env.USER_SERVICE_URL || 'http://localhost:8001';
 
+app.use(cors());
 app.use(express.json());
 
 app.post('/login', async (req, res) => {
