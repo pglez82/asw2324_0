@@ -5,7 +5,7 @@
   "main": "service.js",
   "scripts": {
     "start": "node service.js",
-    "test": "npm test"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -22,5 +22,10 @@
     "body-parser": "^1.20.2",
     "express": "^4.18.2",
     "mongoose": "^8.0.3"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "mongodb-memory-server": "^9.1.4",
+    "supertest": "^6.3.3"
   }
 }

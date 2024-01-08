@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
+const User = require('./model')
 
 const app = express();
 const port = 3001;
@@ -14,22 +15,7 @@ app.use(bodyParser.json());
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/userdb';
 mongoose.connect(mongoUri);
 
-const userSchema = new mongoose.Schema({
-    username: {
-      type: String,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now, 
-    },
-});
 
-const User = mongoose.model('User', userSchema);
 
 // Function to validate required fields in the request body
 function validateRequiredFields(req, requiredFields) {
@@ -59,6 +45,14 @@ app.post('/adduser', async (req, res) => {
         res.status(400).json({ error: error.message }); 
     }});
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`User Service listening at http://localhost:${port}`);
 });
+
+// Listen for the 'close' event on the Express.js server
+server.on('close', () => {
+    // Close the Mongoose connection
+    mongoose.connection.close();
+  });
+
+module.exports = server

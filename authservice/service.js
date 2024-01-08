@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const User = require('./model')
 
 const app = express();
 const port = 3002; 
@@ -12,15 +13,6 @@ app.use(express.json());
 // Connect to MongoDB
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/userdb';
 mongoose.connect(mongoUri);
-
-// Define the User model
-const userSchema = new mongoose.Schema({
-    username: String,
-    password: String,
-    createdAt: Date,
-});
-
-const User = mongoose.model('User', userSchema);
 
 // Function to validate required fields in the request body
 function validateRequiredFields(req, requiredFields) {
@@ -46,7 +38,6 @@ app.post('/login', async (req, res) => {
     if (user && await bcrypt.compare(password, user.password)) {
       // Generate a JWT token
       const token = jwt.sign({ userId: user._id }, 'your-secret-key', { expiresIn: '1h' });
-      console.log(user)
       // Respond with the token and user information
       res.json({ token: token, username: username, createdAt: user.createdAt });
     } else {
@@ -58,6 +49,13 @@ app.post('/login', async (req, res) => {
 });
 
 // Start the server
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Auth Service listening at http://localhost:${port}`);
 });
+
+server.on('close', () => {
+    // Close the Mongoose connection
+    mongoose.connection.close();
+  });
+
+module.exports = server
