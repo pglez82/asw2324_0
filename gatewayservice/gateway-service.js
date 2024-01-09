@@ -11,6 +11,11 @@ const userServiceUrl = process.env.USER_SERVICE_URL || 'http://localhost:8001';
 app.use(cors());
 app.use(express.json());
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.json({ status: 'OK' });
+});
+
 app.post('/login', async (req, res) => {
   try {
     // Forward the login request to the authentication service

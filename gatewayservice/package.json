@@ -4,7 +4,7 @@
     "description": "Gateway service, in charge distributing the requests",
     "main": "service.js",
     "scripts": {
-        "start": "node service.js",
+        "start": "node gateway-service.js",
         "test": "jest"
     },
     "repository": {
