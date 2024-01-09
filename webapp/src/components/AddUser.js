@@ -13,7 +13,7 @@ const AddUser = () => {
 
   const addUser = async () => {
     try {
-      const response = await axios.post(`${apiEndpoint}/adduser`, { username, password });
+      await axios.post(`${apiEndpoint}/adduser`, { username, password });
       setOpenSnackbar(true);
     } catch (error) {
       setError(error.response.data.error);
@@ -30,6 +30,7 @@ const AddUser = () => {
         Add User
       </Typography>
       <TextField
+        name="username"
         margin="normal"
         fullWidth
         label="Username"
@@ -37,6 +38,7 @@ const AddUser = () => {
         onChange={(e) => setUsername(e.target.value)}
       />
       <TextField
+        name="password"
         margin="normal"
         fullWidth
         label="Password"

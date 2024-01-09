@@ -22,7 +22,7 @@ function App() {
       {showLogin ? <Login /> : <AddUser />}
       <Typography component="div" align="center" sx={{ marginTop: 2 }}>
         {showLogin ? (
-          <Link component="button" variant="body2" onClick={handleToggleView}>
+          <Link name="gotoregister" component="button" variant="body2" onClick={handleToggleView}>
             Don't have an account? Register here.
           </Link>
         ) : (

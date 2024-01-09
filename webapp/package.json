@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.22.0",
+    "expect-puppeteer": "^9.0.2",
     "jest": "^27.5.1",
     "jest-cucumber": "^3.0.1",
     "jest-environment-node": "^27.5.1",
