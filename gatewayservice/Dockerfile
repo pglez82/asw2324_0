@@ -14,4 +14,4 @@ RUN npm install
 COPY . .
 
 # Define the command to run your app
-CMD ["node", "service.js"]
+CMD ["node", "gateway-service.js"]
