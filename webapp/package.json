@@ -49,6 +49,7 @@
     "jest-environment-node": "^27.5.1",
     "mongodb-memory-server": "^9.1.4",
     "puppeteer": "^18.1.0",
+    "serve": "^14.2.1",
     "start-server-and-test": "^2.0.3"
   }
 }
