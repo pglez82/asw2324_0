@@ -39,6 +39,8 @@ services:
       - mynetwork
     depends_on:
       - mongodb
+      - userservice
+      - authservice
     environment:
       AUTH_SERVICE_URL: http://authservice:8002
       USER_SERVICE_URL: http://userservice:8001

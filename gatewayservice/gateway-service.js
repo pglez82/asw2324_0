@@ -1,6 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
+const promBundle = require('express-prom-bundle');
 
 const app = express();
 const port = 8000;
@@ -10,6 +11,10 @@ const userServiceUrl = process.env.USER_SERVICE_URL || 'http://localhost:8001';
 
 app.use(cors());
 app.use(express.json());
+
+//Prometheus configuration
+const metricsMiddleware = promBundle({includeMethod: true});
+app.use(metricsMiddleware);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
