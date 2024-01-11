@@ -10,7 +10,7 @@ services:
       - mongodb_data:/data/db
 
   authservice:
-    build: ./authservice
+    build: ./users/authservice
     ports:
       - "8002:8002"
     networks:
@@ -21,7 +21,7 @@ services:
       MONGODB_URI: mongodb://mongodb:27017/userdb
 
   userservice:
-    build: ./userservice
+    build: ./users/userservice
     ports:
       - "8001:8001"
     networks:
