@@ -1,0 +1,81 @@
+version: '3'
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - mynetwork
+    volumes:
+      - mongodb_data:/data/db
+
+  authservice:
+    build: ./users/authservice
+    ports:
+      - "8002:8002"
+    networks:
+      - mynetwork
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/userdb
+
+  userservice:
+    build: ./users/userservice
+    ports:
+      - "8001:8001"
+    networks:
+      - mynetwork
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/userdb
+
+  gatewayservice:
+    build: ./gatewayservice
+    ports:
+      - "8000:8000"
+    networks:
+      - mynetwork
+    environment:
+      AUTH_SERVICE_URL: http://authservice:8002
+      USER_SERVICE_URL: http://userservice:8001
+  
+  webapp:
+    build: ./webapp
+    ports:
+      - "3000:3000"
+
+  prometheus:
+    image: prom/prometheus
+    networks:
+      - mynetwork
+    volumes:
+      - ./gatewayservice/monitoring/prometheus:/etc/prometheus
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    depends_on: 
+      - gatewayservice
+      
+  grafana:
+    image: grafana/grafana
+    networks:
+      - mynetwork
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./gatewayservice/monitoring/grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_SERVER_HTTP_PORT=9091
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    ports:
+      - "9091:9091"
+    depends_on: 
+      - prometheus
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+  prometheus_data: 
+  grafana_data: 

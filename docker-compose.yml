@@ -1,90 +1,36 @@
 version: '3'
 services:
   mongodb:
+    container_name: mongodb-${teamname:-defaultASW}
     image: mongo
-    ports:
-      - "27017:27017"
-    networks:
-      - mynetwork
     volumes:
       - mongodb_data:/data/db
 
   authservice:
-    build: ./users/authservice
-    ports:
-      - "8002:8002"
-    networks:
-      - mynetwork
+    container_name: authservice-${teamname:-defaultASW}
+    image: ghcr.io/pglez82/asw2324_0/authservice:latest
     depends_on:
       - mongodb
-    environment:
-      MONGODB_URI: mongodb://mongodb:27017/userdb
 
   userservice:
-    build: ./users/userservice
-    ports:
-      - "8001:8001"
-    networks:
-      - mynetwork
+    container_name: userservice-${teamname:-defaultASW}
+    image: ghcr.io/pglez82/asw2324_0/userservice:latest
     depends_on:
       - mongodb
-    environment:
-      MONGODB_URI: mongodb://mongodb:27017/userdb
 
   gatewayservice:
-    build: ./gatewayservice
-    ports:
-      - "8000:8000"
-    networks:
-      - mynetwork
+    container_name: gatewayservice-${teamname:-defaultASW}
+    image: ghcr.io/pglez82/asw2324_0/gatewayservice:latest
     depends_on:
       - mongodb
-      - authservice
       - userservice
-    environment:
-      AUTH_SERVICE_URL: http://authservice:8002
-      USER_SERVICE_URL: http://userservice:8001
-  
+      - authservice
+
   webapp:
-    build: ./webapp
-    ports:
-      - "3000:3000"
+    container_name: webapp-${teamname:-defaultASW}
+    image: ghcr.io/pglez82/asw2324_0/webapp:latest
     depends_on:
       - gatewayservice 
 
-  prometheus:
-    image: prom/prometheus
-    networks:
-      - mynetwork
-    volumes:
-      - ./gatewayservice/monitoring/prometheus:/etc/prometheus
-      - prometheus_data:/prometheus
-    ports:
-      - "9090:9090"
-    depends_on: 
-      - gatewayservice
-  grafana:
-    image: grafana/grafana
-    networks:
-      - mynetwork
-    volumes:
-      - grafana_data:/var/lib/grafana
-      - ./gatewayservice/monitoring/grafana/provisioning:/etc/grafana/provisioning
-    environment:
-      - GF_SERVER_HTTP_PORT=9091
-      - GF_AUTH_DISABLE_LOGIN_FORM=true
-      - GF_AUTH_ANONYMOUS_ENABLED=true
-      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
-    ports:
-      - "9091:9091"
-    depends_on: 
-      - prometheus
-
-networks:
-  mynetwork:
-    driver: bridge
-
 volumes:
   mongodb_data:
-  prometheus_data: 
-  grafana_data: 
