@@ -12,12 +12,12 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: 18
-    - run: npm --prefix authservice ci
-    - run: npm --prefix userservice ci
+    - run: npm --prefix users/authservice ci
+    - run: npm --prefix users/userservice ci
     - run: npm --prefix gatewayservice ci
     - run: npm --prefix webapp ci
-    - run: npm --prefix authservice test -- --coverage
-    - run: npm --prefix userservice test -- --coverage
+    - run: npm --prefix users/authservice test -- --coverage
+    - run: npm --prefix users/userservice test -- --coverage
     - run: npm --prefix gatewayservice test -- --coverage
     - run: npm --prefix webapp test -- --coverage
     - name: Analyze with SonarCloud
@@ -33,8 +33,8 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: 18
-    - run: npm --prefix authservice install
-    - run: npm --prefix userservice install
+    - run: npm --prefix users/authservice install
+    - run: npm --prefix users/userservice install
     - run: npm --prefix gatewayservice install
     - run: npm --prefix webapp install
     - run: npm --prefix webapp run build
@@ -75,7 +75,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
-          workdir: authservice
+          workdir: users/authservice
   docker-push-userservice:
     name: Push user service Docker Image to GitHub Packages
     runs-on: ubuntu-latest
@@ -92,7 +92,7 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
-        workdir: userservice
+        workdir: users/userservice
   docker-push-gatewayservice:
     name: Push gateway service Docker Image to GitHub Packages
     runs-on: ubuntu-latest
