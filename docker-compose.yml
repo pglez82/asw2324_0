@@ -9,18 +9,21 @@ services:
   authservice:
     container_name: authservice-${teamname:-defaultASW}
     image: ghcr.io/pglez82/asw2324_0/authservice:latest
+    build: ./users/authservice
     depends_on:
       - mongodb
 
   userservice:
     container_name: userservice-${teamname:-defaultASW}
     image: ghcr.io/pglez82/asw2324_0/userservice:latest
+    build: ./users/userservice
     depends_on:
       - mongodb
 
   gatewayservice:
     container_name: gatewayservice-${teamname:-defaultASW}
     image: ghcr.io/pglez82/asw2324_0/gatewayservice:latest
+    build: ./gatewayservice
     depends_on:
       - mongodb
       - userservice
@@ -29,6 +32,7 @@ services:
   webapp:
     container_name: webapp-${teamname:-defaultASW}
     image: ghcr.io/pglez82/asw2324_0/webapp:latest
+    build: ./webapp
     depends_on:
       - gatewayservice 
 
