@@ -123,6 +123,6 @@ jobs:
         key: ${{ secrets.DEPLOY_KEY }}
         command: |
           wget https://raw.githubusercontent.com/pglez82/asw2324_0/master/docker-compose.yml
-          wget https://raw.githubusercontent.com/pglez82/asw2324_0/master/docker-compose-deploy.override.yml.yml
+          wget https://raw.githubusercontent.com/pglez82/asw2324_0/master/docker-compose-deploy.override.yml
           docker compose down
           docker compose -f docker-compose.yml -f docker-compose-deploy.override.yml up -d
