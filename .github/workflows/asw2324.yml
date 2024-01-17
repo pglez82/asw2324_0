@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
-        node-version: 18
+        node-version: 20
     - run: npm --prefix users/authservice ci
     - run: npm --prefix users/userservice ci
     - run: npm --prefix gatewayservice ci
@@ -32,7 +32,7 @@ jobs:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
-        node-version: 18
+        node-version: 20
     - run: npm --prefix users/authservice install
     - run: npm --prefix users/userservice install
     - run: npm --prefix gatewayservice install
@@ -122,6 +122,7 @@ jobs:
         user: ${{ secrets.DEPLOY_USER }}
         key: ${{ secrets.DEPLOY_KEY }}
         command: |
-          wget https://raw.githubusercontent.com/pglez82/asw2324_0/master/docker-compose-deploy.yml -O docker-compose.yml
-          docker compose down --volumes
+          wget https://raw.githubusercontent.com/pglez82/asw2324_0/master/docker-compose.yml
+          wget https://raw.githubusercontent.com/pglez82/asw2324_0/master/docker-compose-deploy.override.yml.yml
+          docker compose down
           docker compose -f docker-compose.yml -f docker-compose-dev.override.yml up -d
