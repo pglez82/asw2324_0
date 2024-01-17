@@ -25,7 +25,7 @@ Both the user and auth service share a Mongo database that is accessed with mong
 The fastest way for launching this sample project is using docker. Just clone the project:
 ```git clone git@github.com:pglez82/asw2324_0.git```
 and launch it with docker compose:
-```docker-compose up --build```
+```docker compose -f docker-compose.yml -f docker-compose-dev.override.yml up --build```
 
 ### Component by component start
 First, start the database. Either install and run Mongo or run it using docker:
@@ -87,10 +87,8 @@ deploy:
         key: ${{ secrets.DEPLOY_KEY }}
         command: |
           wget https://raw.githubusercontent.com/pglez82/asw2324_0/master/docker-compose-deploy.yml -O docker-compose.yml
-          docker-compose stop
-          docker-compose rm -f
-          docker-compose pull   
-          docker-compose up -d
+          docker compose down --volumes
+          docker compose -f docker-compose.yml -f docker-compose-deploy.override.yml up -d
 ```
 
 This action uses three secrets that must be configured in the repository:
