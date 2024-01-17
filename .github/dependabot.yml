@@ -14,6 +14,9 @@ updates:
     directory: "/webapp" # Location of package manifests
     schedule:
       interval: "weekly"
+    ignore:
+      - dependency-name: "node"
+        versions: ["21.x"]
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/webapp" # Location of package manifests
     schedule:
@@ -23,6 +26,9 @@ updates:
     directory: "/gatewayservice" # Location of package manifests
     schedule:
       interval: "weekly"
+    ignore:
+      - dependency-name: "node"
+        versions: ["21.x"]
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/gatewayservice" # Location of package manifests
     schedule:
@@ -32,6 +38,9 @@ updates:
     directory: "/users/authservice" # Location of package manifests
     schedule:
       interval: "weekly"
+    ignore:
+      - dependency-name: "node"
+        versions: ["21.x"]
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/users/authservice" # Location of package manifests
     schedule:
@@ -41,6 +50,9 @@ updates:
     directory: "/users/userservice" # Location of package manifests
     schedule:
       interval: "weekly"
+    ignore:
+      - dependency-name: "node"
+        versions: ["21.x"]
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/users/userservice" # Location of package manifests
     schedule:
