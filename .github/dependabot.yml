@@ -14,15 +14,24 @@ updates:
     directory: "/webapp" # Location of package manifests
     schedule:
       interval: "weekly"
+    ignore: # Ignore the non-LTS node versions (17/01/2024 >20)
+      - dependency-name: "node"
+        versions: ["21.x","22.x","23.x","24.x"]
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/webapp" # Location of package manifests
     schedule:
       interval: "weekly"
+    ignore: # Avoid puppeteer+jest version updates to avoid incompatibilities/problems in CI-CD
+      - dependency-name: "puppeteer*"
+      - dependency-name: "jest*"
   # Maintain the npm dependencies of the GatewayService
   - package-ecosystem: "docker" # See documentation for possible values
     directory: "/gatewayservice" # Location of package manifests
     schedule:
       interval: "weekly"
+    ignore: # Ignore the non-LTS node versions (17/01/2024 >20)
+      - dependency-name: "node"
+        versions: ["21.x","22.x","23.x","24.x"]
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/gatewayservice" # Location of package manifests
     schedule:
@@ -32,6 +41,9 @@ updates:
     directory: "/users/authservice" # Location of package manifests
     schedule:
       interval: "weekly"
+    ignore: # Ignore the non-LTS node versions (17/01/2024 >20)
+      - dependency-name: "node"
+        versions: ["21.x","22.x","23.x","24.x"]
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/users/authservice" # Location of package manifests
     schedule:
@@ -41,6 +53,9 @@ updates:
     directory: "/users/userservice" # Location of package manifests
     schedule:
       interval: "weekly"
+    ignore: # Ignore the non-LTS node versions (17/01/2024 >20)
+      - dependency-name: "node"
+        versions: ["21.x","22.x","23.x","24.x"]
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/users/userservice" # Location of package manifests
     schedule:
