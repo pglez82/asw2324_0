@@ -1,19 +1,16 @@
-# asw2324_0
+# wiq_0
 
-[![Actions Status](https://github.com/pglez82/asw2324_0/workflows/CI%20for%20ASW2324/badge.svg)](https://github.com/pglez82/asw2324_0/actions)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=pglez82_asw2324_0&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=pglez82_asw2324_0)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=pglez82_asw2324_0&metric=coverage)](https://sonarcloud.io/summary/new_code?id=pglez82_asw2324_0)
+[![Actions Status](https://github.com/arquisoft/wiq_0/workflows/CI%20for%20ASW2324/badge.svg)](https://github.com/arquisoft/wiq_0/actions)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=arquisoft_wiq_0&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=arquisoft_wiq_0)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=arquisoft_wiq_0&metric=coverage)](https://sonarcloud.io/summary/new_code?id=arquisoft_wiq_0)
 
-<p float="left">
-<img src="https://blog.wildix.com/wp-content/uploads/2020/06/react-logo.jpg" height="100">
-<img src="https://miro.medium.com/max/365/1*Jr3NFSKTfQWRUyjblBSKeg.png" height="100">
-</p>
+This is a base repo for the [Software Architecture course](http://arquisoft.github.io/) in [2023/2024 edition](https://arquisoft.github.io/course2324.html). 
 
-This is a base project for the Software Architecture course in 2023/2024. It is a basic application composed of several components.
+This repo is a basic application composed of several components.
 
+- **Gateway service**. Express service that is exposed to the public and serves as a proxy to the two previous ones.
 - **User service**. Express service that handles the insertion of new users in the system.
 - **Auth service**. Express service that handles the authentication of users.
-- **Gateway service**. Express service that is exposed to the public and serves as a proxy to the two previous ones.
 - **Webapp**. React web application that uses the gateway service to allow basic login and new user features.
 
 Both the user and auth service share a Mongo database that is accessed with mongoose.
@@ -23,27 +20,43 @@ Both the user and auth service share a Mongo database that is accessed with mong
 ### Using docker
 
 The fastest way for launching this sample project is using docker. Just clone the project:
-```git clone git@github.com:pglez82/asw2324_0.git```
-and launch it with docker compose:
-```docker compose -f docker-compose.yml -f docker-compose-dev.override.yml up --build```
 
-### Component by component start
+```sh
+git clone https://github.com/Arquisoft/wiq_0.git
+```
+
+and launch it with docker compose:
+
+```sh
+docker compose -f docker-compose.yml -f docker-compose-dev.override.yml up --build
+```
+
+### Starting Component by component
+
 First, start the database. Either install and run Mongo or run it using docker:
 
 ```docker run -d -p 27017:27017 --name=my-mongo mongo:latest```
 
-You can use also services like Mongo Altas for running a Mongo database in the cloud.
+You can also use services like Mongo Altas for running a Mongo database in the cloud.
 
-Now launch the auth, user and gateway services. Just go to each directory and run `npm install` followed by `npm start`.
+Now, launch the auth, user and gateway services. Just go to each directory and run `npm install` followed by `npm start`.
 
 Lastly, go to the webapp directory and launch this component with `npm install` followed by `npm start`.
 
 After all the components are launched, the app should be available in localhost in port 3000.
 
 ## Deployment
-For the deployment, we have several options. The first and more flexible is to deploy to a virtual machine using SSH. This will work with any cloud service (or with our own server). Other options include using the container services that all the cloud services provide. This means, deploying our Docker containers directly. Here I am going to use the first approach. I am going to create a virtual machine in a cloud service and after installing docker and docker-compose, deploy our containers there using GitHub Actions and SSH.
+
+For the deployment, we have several options. 
+
+The first and more flexible is to deploy to a virtual machine using SSH. This will work with any cloud service (or with our own server). 
+
+Other options include using the container services that all the cloud services provide. This means, deploying our Docker containers directly. 
+
+We are going to use the first approach, creating a virtual machine in a cloud service and after installing docker and docker-compose, deploy our containers there using GitHub Actions and SSH.
 
 ### Machine requirements for deployment
+
 The machine for deployment can be created in services like Microsoft Azure or Amazon AWS. These are in general the settings that it must have:
 
 - Linux machine with Ubuntu > 20.04.
@@ -65,7 +78,12 @@ sudo chmod +x /usr/local/bin/docker-compose
 ```
 
 ### Continuous delivery (GitHub Actions)
-Once we have our machine ready, we could deploy by hand the application, taking our docker-compose file and executing it in the remote machine. In this repository, this process is done automatically using **GitHub Actions**. The idea is to trigger a series of actions when some condition is met in the repository. The precondition to trigger a deployment is going to be: "create a new release". The actions to execute are the following:
+
+Once we have our machine ready, we could deploy by hand the application, taking our docker-compose file and executing it in the remote machine. 
+
+In this repository, this process is done automatically using **GitHub Actions**. The idea is to trigger a series of actions when some condition is met in the repository. 
+
+The precondition to trigger a deployment is going to be: "create a new release". The actions to execute are the following:
 
 ![imagen](https://github.com/pglez82/asw2324_0/assets/10683040/44d0fe21-a93f-4b01-b458-ab7af4267fa3)
 
@@ -86,7 +104,7 @@ deploy:
         user: ${{ secrets.DEPLOY_USER }}
         key: ${{ secrets.DEPLOY_KEY }}
         command: |
-          wget https://raw.githubusercontent.com/pglez82/asw2324_0/master/docker-compose-deploy.yml -O docker-compose.yml
+          wget https://raw.githubusercontent.com/arquisoft/wiq_0/master/docker-compose-deploy.yml -O docker-compose.yml
           docker compose down --volumes
           docker compose -f docker-compose.yml -f docker-compose-deploy.override.yml up -d
 ```
