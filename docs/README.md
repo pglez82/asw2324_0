@@ -6,7 +6,7 @@ The deployment url is: [https://pglez82.github.io/asw2324_0/](https://pglez82.gi
 For the documentation, we are going to use [AsciiDoc](https://asciidoc.org/) and [PlantUML](https://plantuml.com) and follow the [Arc42](https://github.com/arc42/arc42-template) template. If you want to be able to generate the doc locally you need to install Ruby, Java and some dependencies to translate the AsciiDoc code into html. If you are in Linux you can install Ruby and Java simply by executing:
 
 ```shell
-apt-get install ruby openjdk-8-jre
+apt-get install ruby default-jre
 ```
 
 On Windows, you can use [these instructions](https://www.ruby-lang.org/en/documentation/installation). Probably you will have Java already installed in your system, if not, you can download it [here](https://www.oracle.com/es/java/technologies/javase/javase8-archive-downloads.html)
