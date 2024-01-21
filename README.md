@@ -1,8 +1,8 @@
 # wiq_0
 
-[![Actions Status](https://github.com/arquisoft/wiq_0/workflows/CI%20for%20ASW2324/badge.svg)](https://github.com/arquisoft/wiq_0/actions)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=arquisoft_wiq_0&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=arquisoft_wiq_0)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=arquisoft_wiq_0&metric=coverage)](https://sonarcloud.io/summary/new_code?id=arquisoft_wiq_0)
+[![Deploy on release](https://github.com/Arquisoft/wiq_0/actions/workflows/release.yml/badge.svg)](https://github.com/Arquisoft/wiq_0/actions/workflows/release.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_wiq_0&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Arquisoft_wiq_0)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_wiq_0&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Arquisoft_wiq_0)
 
 This is a base repo for the [Software Architecture course](http://arquisoft.github.io/) in [2023/2024 edition](https://arquisoft.github.io/course2324.html). 
 
