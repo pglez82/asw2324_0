@@ -51,7 +51,7 @@ For the deployment, we have several options.
 
 The first and more flexible is to deploy to a virtual machine using SSH. This will work with any cloud service (or with our own server). 
 
-Other options include using the container services that all the cloud services provide. This means, deploying our Docker containers directly. 
+Other options include using the container services that most cloud services provide. This means, deploying our Docker containers directly. 
 
 We are going to use the first approach, creating a virtual machine in a cloud service and after installing docker and docker-compose, deploy our containers there using GitHub Actions and SSH.
 

@@ -1,4 +1,4 @@
-name: CI for ASW2324
+name: Deploy on release
 
 on:
   release:
