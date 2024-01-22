@@ -125,4 +125,4 @@ jobs:
           wget https://raw.githubusercontent.com/arquisoft/wiq_0/master/docker-compose.yml
           wget https://raw.githubusercontent.com/arquisoft/wiq_0/master/docker-compose-deploy.override.yml
           docker compose down
-          docker compose -f docker-compose.yml -f docker-compose-deploy.override.yml up -d
+          docker compose --profile prod up -d
