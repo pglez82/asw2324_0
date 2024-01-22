@@ -28,7 +28,7 @@ git clone https://github.com/Arquisoft/wiq_0.git
 and launch it with docker compose:
 
 ```sh
-docker compose -f docker-compose.yml -f docker-compose-dev.override.yml up --build
+docker compose --profile dev up --build
 ```
 
 ### Starting Component by component
@@ -102,7 +102,7 @@ deploy:
         command: |
           wget https://raw.githubusercontent.com/arquisoft/wiq_0/master/docker-compose-deploy.yml -O docker-compose.yml
           docker compose down --volumes
-          docker compose -f docker-compose.yml -f docker-compose-deploy.override.yml up -d
+          docker compose --profile prod up -d
 ```
 
 This action uses three secrets that must be configured in the repository:
