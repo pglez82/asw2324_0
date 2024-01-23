@@ -87,8 +87,8 @@ deploy:
         key: ${{ secrets.DEPLOY_KEY }}
         command: |
           wget https://raw.githubusercontent.com/pglez82/asw2324_0/master/docker-compose-deploy.yml -O docker-compose.yml
-          docker compose down --volumes
-          docker compose -f docker-compose.yml -f docker-compose-deploy.override.yml up -d
+          docker compose down
+          docker compose --profile prod up -d
 ```
 
 This action uses three secrets that must be configured in the repository:
