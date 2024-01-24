@@ -86,7 +86,8 @@ deploy:
         user: ${{ secrets.DEPLOY_USER }}
         key: ${{ secrets.DEPLOY_KEY }}
         command: |
-          wget https://raw.githubusercontent.com/pglez82/asw2324_0/master/docker-compose.yml
+          wget https://raw.githubusercontent.com/pglez82/asw2324_0/master/docker-compose.yml -O docker-compose.yml
+          wget https://raw.githubusercontent.com/pglez82/asw2324_0/master/.env
           docker compose down
           docker compose --profile prod up -d
 ```
