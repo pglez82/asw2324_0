@@ -1,8 +1,8 @@
-# wiq_es6b
+# wiq_0
 
-[![Deploy on release](https://github.com/Arquisoft/wiq_es6b/actions/workflows/release.yml/badge.svg)](https://github.com/Arquisoft/wiq_es6b/actions/workflows/release.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_wiq_es6b&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Arquisoft_wiq_es6b)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_wiq_es6b&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Arquisoft_wiq_es6b)
+[![Deploy on release](https://github.com/Arquisoft/wiq_0/actions/workflows/release.yml/badge.svg)](https://github.com/Arquisoft/wiq_0/actions/workflows/release.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_wiq_0&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Arquisoft_wiq_0)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_wiq_0&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Arquisoft_wiq_0)
 
 This is a base repo for the [Software Architecture course](http://arquisoft.github.io/) in [2023/2024 edition](https://arquisoft.github.io/course2324.html). 
 
@@ -22,7 +22,7 @@ Both the user and auth service share a Mongo database that is accessed with mong
 The fastest way for launching this sample project is using docker. Just clone the project:
 
 ```sh
-git clone https://github.com/Arquisoft/wiq_es6b.git
+git clone https://github.com/Arquisoft/wiq_0.git
 ```
 
 and launch it with docker compose:

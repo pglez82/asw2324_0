@@ -53,7 +53,7 @@ jobs:
       env:
         API_URI: http://${{ secrets.DEPLOY_HOST }}:8000
       with:
-          name: arquisoft/wiq_es6b/webapp
+          name: arquisoft/wiq_0/webapp
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
@@ -71,7 +71,7 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       with:
-          name: arquisoft/wiq_es6b/authservice
+          name: arquisoft/wiq_0/authservice
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
@@ -88,7 +88,7 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       with:
-        name: arquisoft/wiq_es6b/userservice
+        name: arquisoft/wiq_0/userservice
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
@@ -105,7 +105,7 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       with:
-        name: arquisoft/wiq_es6b/gatewayservice
+        name: arquisoft/wiq_0/gatewayservice
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
