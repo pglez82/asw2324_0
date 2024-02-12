@@ -23,7 +23,7 @@ function App() {
       <Typography component="div" align="center" sx={{ marginTop: 2 }}>
         {showLogin ? (
           <Link name="gotoregister" component="button" variant="body2" onClick={handleToggleView}>
-            Don't have an account? Register here!.
+            Don't have an account? Register here.
           </Link>
         ) : (
           <Link component="button" variant="body2" onClick={handleToggleView}>
