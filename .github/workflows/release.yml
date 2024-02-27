@@ -68,6 +68,8 @@ jobs:
     needs: [e2e-tests]
     steps:
     - uses: actions/checkout@v4
+    - name: Set up Docker Buildx
+    - uses: docker/setup-buildx-action@v2
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       with:
@@ -76,6 +78,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
           workdir: users/authservice
+          platforms: linux/amd64,linux/arm64
+          
   docker-push-userservice:
     name: Push user service Docker Image to GitHub Packages
     runs-on: ubuntu-latest
