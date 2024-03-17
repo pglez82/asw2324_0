@@ -1,0 +1,110 @@
+openapi: 3.0.0
+info:
+  title: Gatewayservice API
+  description: Gateway OpenAPI specification.
+  version: 0.2.0
+servers:
+  - url: http://localhost:8000
+    description: Development server
+  - url: http://SOMEIP:8000
+    description: Production server
+paths:
+  /adduser:
+    post:
+      summary: Add a new user to the database.
+      operationId: addUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: User ID.
+                password:
+                  type: string
+                  description: User password.
+      responses:
+        '200':
+          description: User added successfully.
+        '400':
+          description: Failed to add user.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
+  /health:
+    get:
+      summary: Check the health status of the service.
+      operationId: checkHealth
+      responses:
+        '200':
+          description: Service is healthy.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Health status.
+  /login:
+    post:
+      summary: Log in to the system.
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: User ID.
+                password:
+                  type: string
+                  description: User password.
+      responses:
+        '200':
+          description: Login successful. Returns user token, username, and creation date.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: User token.
+                  username:
+                    type: string
+                    description: Username.
+                  createdAt:
+                    type: string
+                    description: Creation date.
+        '401':
+          description: Invalid credentials.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Invalid Credentials.
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.

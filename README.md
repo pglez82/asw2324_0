@@ -109,7 +109,7 @@ deploy:
           wget https://raw.githubusercontent.com/arquisoft/wiq_0/master/docker-compose.yml -O docker-compose.yml
           wget https://raw.githubusercontent.com/arquisoft/wiq_0/master/.env -O .env
           docker compose --profile prod down
-          docker compose --profile prod up -d
+          docker compose --profile prod up -d --pull always
 ```
 
 This action uses three secrets that must be configured in the repository:
