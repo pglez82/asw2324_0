@@ -108,14 +108,21 @@ E2E tests are maybe the most difficult part to integrate in our system. We have 
 
 In this project, the E2E testing user stories are defined using Cucumber. Cucumber uses a language called Gherkin to define the user stories. You can find the example in the `features` directory. Then, the actual tests are in the folder `steps`. We are going to configure jest to execute only the tests of this directory (check the `jest.config.ts` file in the `e2e` directory). 
 
-The E2E tests have two extra difficulties. The first one, we need a browser to perform the tests as if the user was using the application. For this matter, we use `jest-puppeteer` that will launch a Chromium instance for running the tests. The browser is started in the `beforeAll` function. Note that the browser is launched in a headless mode. This is necessary for the tests to run in the CI environment. If you want to debug the tests you can always turn this feature off. The second problem is that we need all our services at the same time to be able to run the tests. For achieving this, we are going to use the package `start-server-and-test`. This package, allows us to launch multiple servers and then run the tests. No need for any configuration. We can configure it straight in the `package.json` file:
+The E2E tests have two extra difficulties. The first one, we need a browser to perform the tests as if the user was using the application. 
+For this matter, we use `jest-puppeteer` that will launch a Chromium instance for running the tests. 
+The browser is started in the `beforeAll` function. Note that the browser is launched in a headless mode. 
+This is necessary for the tests to run in the CI environment. If you want to debug the tests you can always turn this feature off. 
+The second problem is that we need all our services at the same time to be able to run the tests. 
+For achieving this, we are going to use the package `start-server-and-test`. 
+This package, allows us to launch multiple servers and then run the tests. 
+No need for any configuration. We can configure it straight in the `package.json` file:
 
 ```json
    "test:e2e": "start-server-and-test 'node e2e/test-environment-setup.js' http://localhost:8000/health prod 3000 \"cd e2e && jest\"",
 ```
 
 
-The package accepts pairs of parameters (launch a server and an URL to check if it is running. It also accepts npm commands (for instance prod, for the webapp, that will run `npm run prod`). The last parameter of the task will be launching Jest to run the E2E tests.
+The package accepts pairs of parameters (launch a server and an URL to check if it is running. It also accepts npm commands (for instance prod, for the webapp, that will run `npm run prod`). The last parameter of the task will be launching Jest to run the e2e tests.
 
 Note that we are handling all the setup for the auth and user microservices using the file `test-environment-setup.js`. This file has the code needed to run everything, including an in-memory Mongo database to be able to execute the tests.
 
