@@ -117,5 +117,36 @@ The E2E tests have two extra difficulties. The first one, we need a browser to p
 
 The package accepts pairs of parameters (launch a server and an URL to check if it is running. It also accepts npm commands (for instance prod, for the webapp, that will run `npm run prod`). The last parameter of the task will be launching Jest to run the E2E tests.
 
+### Load testing (Gatling)
+This part will be carried out using [Gatling](https://gatling.io/). Gatling will simulate load in our system making petitions to the webapp.
+
+In order to use Gatling for doing the load tests in our application we need to [download](https://docs.gatling.io/reference/install/oss/) it. Basically, the program has two parts, a [recorder](https://docs.gatling.io/tutorials/recorder/) to capture the actions that we want to test and a program to run this actions and get the results. Gatling will take care of capture all the response times in our requests and presenting them in quite useful graphics for its posterior analysis.
+
+Once we have downloaded Gatling we need to start the [recorder](https://docs.gatling.io/tutorials/recorder/). This works as a proxy that intercepts all the actions that we make in our browser. That means that we have to configure our browser to use a proxy. We have to follow this steps:
+
+1. Configure the recorder in **HTTP proxy mode**.
+2. Configure the **HTTPs mode** to Certificate Authority.
+3. Generate a **CA certificate** and key. For this, press the Generate CA button. You will have to choose a folder to generate the certificates. Two pem files will be generated.
+4. Configure Firefox to use this **CA certificate** (Preferences>Certificates, import the generated certificate).
+5. Configure Firefox to use a **proxy** (Preferences>Network configuration). The proxy will be localhost:8000.
+6. Configure Firefox so it uses this proxy even if the call is to a local address. In order to do this, we need to set the property `network.proxy.allow_hijacking_localhost` to `true` in `about:config`. 
+
+Once we have the recorder configured, and the application running (in Azure for instance), we can start recording our first test. We must specify a package and class name. This is just for test organization. Package will be a folder and Class name the name of the test. In my case I have used `GetUsersList` without package name. After pressing start the recorder will start capturing our actions in the browser. So here you should perform all the the actions that you want to record. In my case, I opened the main website and added one user. Once we stop recording the simulation will be stored under the `user-files/simulations` directory, written in [Scala](https://www.scala-lang.org/) language. I have copied the generated file under `webapp/loadtestexample` just in case you want to see how a test file in gatling looks like. Note that this simulation included a post petition to the restapi. Post data is stored under a different directory in the gattling installation directory (`user-files/resources`). 
+
+We can modify our load test for instance to inject 20 users at the same time:
+```scala
+setUp(scn.inject(constantUsersPerSec(3).during(15))).protocols(httpProtocol)
+```
+changing it in the scala file. Check [here](https://gatling.io/docs/gatling/reference/current/core/injection/) to see more options about generating load.
+In order to execute the test we have to execute:
+
+```bash
+gatling.sh
+```
+
+In the console, we will get an overview of the results and in the results directory we will have the full report in web format.
+
+It is important to note that we could also dockerize this load tests using this [image](https://hub.docker.com/r/denvazh/gatling). It is just a matter of telling the docker file where your gatling configuration and scala files are and the image will do the rest.
+
 Note that we are handling all the setup for the auth and user microservices using the file `test-environment-setup.js`. This file has the code needed to run everything, including an in-memory Mongo database to be able to execute the tests.
 
