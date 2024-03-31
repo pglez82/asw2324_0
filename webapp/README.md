@@ -133,9 +133,9 @@ Once we have downloaded Gatling we need to start the [recorder](https://docs.gat
 
 Once we have the recorder configured, and the application running (in Azure for instance), we can start recording our first test. We must specify a package and class name. This is just for test organization. Package will be a folder and Class name the name of the test. In my case I have used `GetUsersList` without package name. After pressing start the recorder will start capturing our actions in the browser. So here you should perform all the the actions that you want to record. In my case, I opened the main website and added one user. Once we stop recording the simulation will be stored under the `user-files/simulations` directory, written in [Scala](https://www.scala-lang.org/) language. I have copied the generated file under `webapp/loadtestexample` just in case you want to see how a test file in gatling looks like. Note that this simulation included a post petition to the restapi. Post data is stored under a different directory in the gattling installation directory (`user-files/resources`). 
 
-We can modify our load test for instance to inject 20 users at the same time:
+We can modify our load test for instance to inject 2 users per second during 1 minute:
 ```scala
-setUp(scn.inject(constantUsersPerSec(3).during(15))).protocols(httpProtocol)
+setUp(scn.injectOpen(constantUsersPerSec(2).during(60).randomized()).protocols(httpProtocol));
 ```
 changing it in the scala file. Check [here](https://gatling.io/docs/gatling/reference/current/core/injection/) to see more options about generating load.
 In order to execute the test we have to execute:
